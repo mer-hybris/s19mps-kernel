@@ -278,7 +278,8 @@ struct sprd_ieee80211_regdomain {
 	struct sprd_reg_rule reg_rules[];
 };
 
-static inline __le32 sprd_convert_wpa_version(u32 version)
+static inline __le32 sprd_convert_wpa_version(u32 version,
+		u32 akm)
 {
 	u32 ret;
 
@@ -287,7 +288,10 @@ static inline __le32 sprd_convert_wpa_version(u32 version)
 		ret = SPRD_WPA_VERSION_1;
 		break;
 	case NL80211_WPA_VERSION_2:
-		ret = SPRD_WPA_VERSION_2;
+		if (akm == WLAN_AKM_SUITE_SAE)
+			ret = SPRD_WPA_VERSION_3;
+		else
+			ret = SPRD_WPA_VERSION_2;
 		break;
 	case NL80211_WPA_VERSION_3:
 		ret = SPRD_WPA_VERSION_3;

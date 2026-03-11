@@ -842,7 +842,8 @@ int sprd_cfg80211_connect(struct wiphy *wiphy, struct net_device *ndev,
 			goto err;
 	}
 
-	con.wpa_versions = sprd_convert_wpa_version(sme->crypto.wpa_versions);
+	con.wpa_versions = sprd_convert_wpa_version(sme->crypto.wpa_versions,
+			sme->crypto.akm_suites[0]);
 	netdev_info(ndev, "sme->wpa versions %#x, con.wpa_version:%#x\n",
 		    sme->crypto.wpa_versions, con.wpa_versions);
 	netdev_info(ndev, "management frame protection %#x\n", sme->mfp);
